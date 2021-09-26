@@ -88,6 +88,7 @@ fn write_image(pixels: [[u8; 75]; 75]) {
 
     for (x, y, pixel) in imgbuf.enumerate_pixels_mut() {
         let r = pixels[x as usize][y as usize];
+        let r = r * 255;
         let g = r;
         let b = r;
         *pixel = image::Rgb([r, g, b]);
