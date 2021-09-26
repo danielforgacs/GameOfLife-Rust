@@ -1,4 +1,5 @@
 extern crate rand;
+extern crate image;
 use std::{thread, time};
 
 fn census(_world: [[u8; 75]; 75]) -> u16 {
@@ -76,4 +77,21 @@ fn main() {
             }
         }
     }
+
+    write_image(world);
+}
+
+fn write_image(pixels: [[u8; 75]; 75]) {
+    let w = 75_u32;
+    let h = 75_u32;
+    let mut imgbuf = image::ImageBuffer::new(w, h);
+
+    for (x, y, pixel) in imgbuf.enumerate_pixels_mut() {
+        let r = pixels[x as usize][y as usize];
+        let g = r;
+        let b = r;
+        *pixel = image::Rgb([r, g, b]);
+    }
+
+    imgbuf.save("game_of_lif.png").unwrap();
 }
