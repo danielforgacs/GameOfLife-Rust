@@ -91,10 +91,23 @@ fn main() {
         let world = populate_from_file(filename);
     }
     println!("Population at generation {} is {}", generations, census(world));
-    for _gens in 0..2 {
+    for _gens in 0..5 {
         let temp = generation(world);
+        world = temp;
+        generations += 1;
+        println!("{}", clear::All);
+        display_world(world);
+        println!("{blue}Population at generation {g} is {c}",
+            blue=color::Fg(color::Blue),
+            g=generations,
+            c=census(world));
+        thread::sleep(time::Duration::from_secs(1));
     }
     write_image(world);
+}
+
+fn display_world(world: [[u8; 75]; 75]) {
+
 }
 
 fn populate_from_file(filename: String) -> [[u8; 75]; 75] {
