@@ -91,6 +91,9 @@ fn main() {
         let world = populate_from_file(filename);
     }
     println!("Population at generation {} is {}", generations, census(world));
+    for _gens in 0..2 {
+        let temp = generation(world);
+    }
     write_image(world);
 }
 
