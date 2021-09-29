@@ -112,6 +112,7 @@ fn populate_from_file(filename: String) -> [[u8; 75]; 75] {
     }
 
     for (x,y) in pairs {
+        println!("live cell: {}, {}", x, y);
         newworld[x][y] = 1;
     }
 
