@@ -88,22 +88,32 @@ fn main() {
     } else {
 
         let filename = env::args().nth(1).unwrap();
-        let world = populate_from_file(filename);
+        world = populate_from_file(filename);
+        // display_world(world);
+        println!("ensus{}, gen {}", census(world), generations);
     }
     println!("Population at generation {} is {}", generations, census(world));
-    for _gens in 0..5 {
+    let filename = format!("images/game_of_life.{:04}.png", generations);
+    write_image(world, filename);
+    // println!("{}", filename);
+    // return;
+    for _gens in 0..2 {
         let temp = generation(world);
         world = temp;
         generations += 1;
-        println!("{}", clear::All);
-        display_world(world);
+        let filename = format!("images/game_of_life.{:04}.png", generations);
+        write_image(world, filename);
+
+        // println!("{}", filename);
+    
+        // println!("{}", clear::All);
+        // display_world(world);
         println!("{blue}Population at generation {g} is {c}",
             blue=color::Fg(color::Blue),
             g=generations,
             c=census(world));
-        thread::sleep(time::Duration::from_secs(1));
+        // thread::sleep(time::Duration::from_secs_f32(0.1));
     }
-    write_image(world);
 }
 
 fn display_world(world: [[u8; 75]; 75]) {
@@ -142,11 +152,13 @@ fn populate_from_file(filename: String) -> [[u8; 75]; 75] {
         println!("live cell: {}, {}", x, y);
         newworld[x][y] = 1;
     }
+    // println!("census {}", census(newworld));
+    // display_world(newworld);
 
     newworld
 }
 
-fn write_image(pixels: [[u8; 75]; 75]) {
+fn write_image(pixels: [[u8; 75]; 75], filename: String) {
     let w = 75_u32;
     let h = 75_u32;
     let mut imgbuf = image::ImageBuffer::new(w, h);
@@ -159,5 +171,10 @@ fn write_image(pixels: [[u8; 75]; 75]) {
         *pixel = image::Rgb([r, g, b]);
     }
 
-    imgbuf.save("game_of_lif.png").unwrap();
+    // imgbuf.save(filename).unwrap();
+    match imgbuf.save(filename) {
+        Ok(_) => {},
+        // Err(error) => { println!("Could not save for some reason.") }
+        Err(error) => { panic!("[ERROR] Could not save for some reason. Check if the \"images\" directory exists!") }
+    };
 }
