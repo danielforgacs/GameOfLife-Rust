@@ -99,7 +99,7 @@ fn main() {
         let temp = generation(world);
         world = temp;
         generations += 1;
-        let filename = format!("game_of_life.{:04}.png", generations);
+        let filename = format!("images/game_of_life.{:04}.png", generations);
         write_image(world, filename);
 
         // println!("{}", filename);
