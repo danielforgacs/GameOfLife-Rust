@@ -91,10 +91,19 @@ fn main() {
         let world = populate_from_file(filename);
     }
     println!("Population at generation {} is {}", generations, census(world));
-    for _gens in 0..50 {
+    let filename = format!("game_of_life.{:04}.png", generations);
+    write_image(world, filename);
+    // println!("{}", filename);
+    // return;
+    for _gens in 0..3 {
         let temp = generation(world);
         world = temp;
         generations += 1;
+        let filename = format!("game_of_life.{:04}.png", generations);
+        write_image(world, filename);
+
+        // println!("{}", filename);
+    
         println!("{}", clear::All);
         display_world(world);
         println!("{blue}Population at generation {g} is {c}",
@@ -103,7 +112,6 @@ fn main() {
             c=census(world));
         // thread::sleep(time::Duration::from_secs_f32(0.1));
     }
-    write_image(world);
 }
 
 fn display_world(world: [[u8; 75]; 75]) {
@@ -139,14 +147,14 @@ fn populate_from_file(filename: String) -> [[u8; 75]; 75] {
     }
 
     for (x,y) in pairs {
-        println!("live cell: {}, {}", x, y);
+        // println!("live cell: {}, {}", x, y);
         newworld[x][y] = 1;
     }
 
     newworld
 }
 
-fn write_image(pixels: [[u8; 75]; 75]) {
+fn write_image(pixels: [[u8; 75]; 75], filename: String) {
     let w = 75_u32;
     let h = 75_u32;
     let mut imgbuf = image::ImageBuffer::new(w, h);
@@ -159,5 +167,5 @@ fn write_image(pixels: [[u8; 75]; 75]) {
         *pixel = image::Rgb([r, g, b]);
     }
 
-    imgbuf.save("game_of_lif.png").unwrap();
+    imgbuf.save(filename).unwrap();
 }
