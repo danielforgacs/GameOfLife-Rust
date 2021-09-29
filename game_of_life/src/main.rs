@@ -91,7 +91,7 @@ fn main() {
         let world = populate_from_file(filename);
     }
     println!("Population at generation {} is {}", generations, census(world));
-    for _gens in 0..5 {
+    for _gens in 0..50 {
         let temp = generation(world);
         world = temp;
         generations += 1;
@@ -101,7 +101,7 @@ fn main() {
             blue=color::Fg(color::Blue),
             g=generations,
             c=census(world));
-        thread::sleep(time::Duration::from_secs(1));
+        // thread::sleep(time::Duration::from_secs_f32(0.1));
     }
     write_image(world);
 }
