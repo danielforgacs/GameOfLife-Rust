@@ -91,7 +91,7 @@ fn main() {
         let world = populate_from_file(filename);
     }
     println!("Population at generation {} is {}", generations, census(world));
-    let filename = format!("game_of_life.{:04}.png", generations);
+    let filename = format!("images/game_of_life.{:04}.png", generations);
     write_image(world, filename);
     // println!("{}", filename);
     // return;
@@ -167,5 +167,10 @@ fn write_image(pixels: [[u8; 75]; 75], filename: String) {
         *pixel = image::Rgb([r, g, b]);
     }
 
-    imgbuf.save(filename).unwrap();
+    // imgbuf.save(filename).unwrap();
+    match imgbuf.save(filename) {
+        Ok(_) => {},
+        // Err(error) => { println!("Could not save for some reason.") }
+        Err(error) => { panic!("[ERROR] Could not save for some reason. Check if the \"images\" directory exists!") }
+    };
 }
