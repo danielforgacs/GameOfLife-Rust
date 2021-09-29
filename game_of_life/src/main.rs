@@ -90,6 +90,7 @@ fn main() {
         let filename = env::args().nth(1).unwrap();
         let world = populate_from_file(filename);
     }
+    println!("Population at generation {} is {}", generations, census(world));
     write_image(world);
 }
 
