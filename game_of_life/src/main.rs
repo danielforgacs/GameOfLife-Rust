@@ -95,7 +95,7 @@ fn main() {
     write_image(world, filename);
     // println!("{}", filename);
     // return;
-    for _gens in 0..3 {
+    for _gens in 0..150 {
         let temp = generation(world);
         world = temp;
         generations += 1;
