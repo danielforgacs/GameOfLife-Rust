@@ -1,13 +1,13 @@
 extern crate rand;
-extern crate termion;
+// extern crate termion;
 extern crate image;
-use std::{env, thread, time};
+use std::{env};
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use termion::color;
-use termion::clear;
+// use termion::clear;
 
-fn census(_world: [[u8; 75]; 75]) -> u16 {
+fn _census(_world: [[u8; 75]; 75]) -> u16 {
     let mut count = 0;
     for i in 0..74 {
         for j in 0..74 {
@@ -89,9 +89,7 @@ fn main() {
 
         let filename = env::args().nth(1).unwrap();
         world = populate_from_file(filename);
-        println!("ensus{}, gen {}", census(world), generations);
     }
-    println!("Population at generation {} is {}", generations, census(world));
     let filename = format!("images/game_of_life.{:04}.png", generations);
     write_image(world, filename);
     for _gens in 0..2 {
@@ -100,15 +98,10 @@ fn main() {
         generations += 1;
         let filename = format!("images/game_of_life.{:04}.png", generations);
         write_image(world, filename);
-
-        println!("{blue}Population at generation {g} is {c}",
-            blue=color::Fg(color::Blue),
-            g=generations,
-            c=census(world));
     }
 }
 
-fn display_world(world: [[u8; 75]; 75]) {
+fn _display_world(world: [[u8; 75]; 75]) {
     for i in 0..74 {
         for j in 0..74 {
             if world[i][j] == 1 {
@@ -127,7 +120,7 @@ fn populate_from_file(filename: String) -> [[u8; 75]; 75] {
     let file = File::open(filename).unwrap();
     let reader = BufReader::new(file);
     let mut pairs: Vec<(usize, usize)> = Vec::new();
-    for (index, line) in reader.lines().enumerate() {
+    for (_index, line) in reader.lines().enumerate() {
         let l = line.unwrap();
         let mut words = l.split_whitespace();
         let left = words.next().unwrap();
@@ -141,7 +134,6 @@ fn populate_from_file(filename: String) -> [[u8; 75]; 75] {
     }
 
     for (x,y) in pairs {
-        println!("live cell: {}, {}", x, y);
         newworld[x][y] = 1;
     }
 
@@ -163,6 +155,6 @@ fn write_image(pixels: [[u8; 75]; 75], filename: String) {
 
     match imgbuf.save(filename) {
         Ok(_) => {},
-        Err(error) => { panic!("[ERROR] Could not save for some reason. Check if the \"images\" directory exists!") }
+        Err(_) => { panic!("[ERROR] Could not save for some reason. Check if the \"images\" directory exists!") }
     };
 }
