@@ -9,8 +9,8 @@ use termion::clear;
 
 fn census(_world: [[u8; 75]; 75]) -> u16 {
     let mut count = 0;
-    for i in 0..74 {
-        for j in 0..74 {
+    for i in 0..75 {
+        for j in 0..75 {
             if _world[i][j] == 1 {
                 count += 1;
             }
@@ -22,8 +22,8 @@ fn census(_world: [[u8; 75]; 75]) -> u16 {
 fn generation(_world: [[u8; 75]; 75]) -> [[u8; 75]; 75] {
     let mut newworld = [[0_u8; 75]; 75];
 
-    for i in 0..74 {
-        for j in 0..74 {
+    for i in 0..75 {
+        for j in 0..75 {
             let mut count = 0;
 
             if i > 0 {
@@ -75,8 +75,8 @@ fn main() {
 
     let args: Vec<String> = env::args().collect();
     if args.len() < 2 {
-        for i in 0..74 {
-            for j in 0..74 {
+        for i in 0..75 {
+            for j in 0..75 {
                 if rand::random() {
                     world[i][j] = 1;
                 } else {
@@ -119,8 +119,8 @@ fn main() {
 }
 
 fn display_world(world: [[u8; 75]; 75]) {
-    for i in 0..74 {
-        for j in 0..74 {
+    for i in 0..75 {
+        for j in 0..75 {
             if world[i][j] == 1 {
                 print!("{red}*", red=color::Fg(color::Red));
             }
@@ -144,8 +144,8 @@ fn populate_from_file(filename: String) -> [[u8; 75]; 75] {
         let rigth = words.next().unwrap();
         pairs.push((left.parse::<usize>().unwrap(), rigth.parse::<usize>().unwrap()))
     }
-    for i in 0..74 {
-        for j in 0..74 {
+    for i in 0..75 {
+        for j in 0..75 {
             newworld[i][j] = 0;
         }
     }
