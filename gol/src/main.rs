@@ -48,12 +48,8 @@ fn generate_map(parms: &Parms) -> Vec<Vec<bool>> {
 fn display_map(map: Vec<Vec<bool>>) {
     for y in map {
         for x in y {
-
             print!("{}", {if x == true {LIVE} else {DEAD}});
         }
         print!("\n");
-        // for x in 0..y.len() {
-        //     print!("{}", map[x]);
-        // }
     }
 }
