@@ -7,10 +7,13 @@ use std::io::{BufRead, BufReader};
 use termion::color;
 use termion::clear;
 
-fn census(_world: [[u8; 75]; 75]) -> u16 {
+
+const WIDTH: usize = 75;
+
+fn census(_world: [[u8; WIDTH]; WIDTH]) -> u16 {
     let mut count = 0;
-    for i in 0..75 {
-        for j in 0..75 {
+    for i in 0..WIDTH {
+        for j in 0..WIDTH {
             if _world[i][j] == 1 {
                 count += 1;
             }
@@ -19,11 +22,11 @@ fn census(_world: [[u8; 75]; 75]) -> u16 {
     count
 }
 
-fn generation(_world: [[u8; 75]; 75]) -> [[u8; 75]; 75] {
-    let mut newworld = [[0_u8; 75]; 75];
+fn generation(_world: [[u8; WIDTH]; WIDTH]) -> [[u8; WIDTH]; WIDTH] {
+    let mut newworld = [[0_u8; WIDTH]; WIDTH];
 
-    for i in 0..75 {
-        for j in 0..75 {
+    for i in 0..WIDTH {
+        for j in 0..WIDTH {
             let mut count = 0;
 
             if i > 0 {
@@ -32,23 +35,23 @@ fn generation(_world: [[u8; 75]; 75]) -> [[u8; 75]; 75] {
             if i > 0 && j > 0 {
                 count = count + _world[i-1][j-1];
             }
-            if i > 0 && j < 74 {
+            if i > 0 && j < WIDTH-1 {
                 count = count + _world[i-1][j+1];
             }
-            if i < 74 && j > 0 {
+            if i < WIDTH-1 && j > 0 {
                 count = count + _world[i+1][j-1];
             }
-            if i < 74 {
+            if i < WIDTH-1 {
                 count = count + _world[i+1][j];
             }
 
-            if i < 74 && j < 74 {
+            if i < WIDTH-1 && j < WIDTH-1 {
                 count = count + _world[i+1][j+1]
             }
             if  j > 0 {
                 count = count + _world[i][j-1]
             }
-            if  j < 74 {
+            if  j < WIDTH-1 {
                 count = count + _world[i][j+1]
             }
 
@@ -70,13 +73,13 @@ fn generation(_world: [[u8; 75]; 75]) -> [[u8; 75]; 75] {
 }
 
 fn main() {
-    let mut world = [[0_u8; 75]; 75];
+    let mut world = [[0_u8; WIDTH]; WIDTH];
     let mut generations = 0;
 
     let args: Vec<String> = env::args().collect();
     if args.len() < 2 {
-        for i in 0..75 {
-            for j in 0..75 {
+        for i in 0..WIDTH {
+            for j in 0..WIDTH {
                 if rand::random() {
                     world[i][j] = 1;
                 } else {
@@ -118,9 +121,9 @@ fn main() {
     }
 }
 
-fn display_world(world: [[u8; 75]; 75]) {
-    for i in 0..75 {
-        for j in 0..75 {
+fn display_world(world: [[u8; WIDTH]; WIDTH]) {
+    for i in 0..WIDTH {
+        for j in 0..WIDTH {
             if world[i][j] == 1 {
                 print!("{red}*", red=color::Fg(color::Red));
             }
@@ -132,8 +135,8 @@ fn display_world(world: [[u8; 75]; 75]) {
     }
 }
 
-fn populate_from_file(filename: String) -> [[u8; 75]; 75] {
-    let mut newworld = [[0_u8; 75]; 75];
+fn populate_from_file(filename: String) -> [[u8; WIDTH]; WIDTH] {
+    let mut newworld = [[0_u8; WIDTH]; WIDTH];
     let file = File::open(filename).unwrap();
     let reader = BufReader::new(file);
     let mut pairs: Vec<(usize, usize)> = Vec::new();
@@ -144,8 +147,8 @@ fn populate_from_file(filename: String) -> [[u8; 75]; 75] {
         let rigth = words.next().unwrap();
         pairs.push((left.parse::<usize>().unwrap(), rigth.parse::<usize>().unwrap()))
     }
-    for i in 0..75 {
-        for j in 0..75 {
+    for i in 0..WIDTH {
+        for j in 0..WIDTH {
             newworld[i][j] = 0;
         }
     }
@@ -160,9 +163,9 @@ fn populate_from_file(filename: String) -> [[u8; 75]; 75] {
     newworld
 }
 
-fn write_image(pixels: [[u8; 75]; 75], filename: String) {
-    let w = 75_u32;
-    let h = 75_u32;
+fn write_image(pixels: [[u8; WIDTH]; WIDTH], filename: String) {
+    let w = WIDTH as u32;
+    let h = WIDTH as u32;
     let mut imgbuf = image::ImageBuffer::new(w, h);
 
     for (x, y, pixel) in imgbuf.enumerate_pixels_mut() {
