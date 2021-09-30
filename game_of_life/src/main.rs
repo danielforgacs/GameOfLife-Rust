@@ -100,7 +100,7 @@ fn main() {
     write_image(world, filename);
     // println!("{}", filename);
     // return;
-    display_world(world);
+    // display_world(world);
 
     for _gens in 0..25 {
         let temp = generation(world);
@@ -112,7 +112,7 @@ fn main() {
         // println!("{}", filename);
     
         // println!("{}", clear::All);
-        display_world(world);
+        // display_world(world);
         println!("{blue}Population at generation {g} is {c}",
             blue=color::Fg(color::Blue),
             g=generations,
