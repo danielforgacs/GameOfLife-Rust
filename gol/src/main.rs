@@ -52,28 +52,12 @@ fn display_map(map: &Vec<Vec<bool>>, gen: &u16) {
 fn calc_next_gen_map(map: &Vec<Vec<bool>>) -> Vec<Vec<bool>>{
     let mut newmap: Vec<Vec<bool>> = Vec::new();
 
-    // for row in map {
-    //     for column in row {
-    //         print!(".");
-    //     }
-    //     print!("\n");
-    // }
     for (y, row) in map.iter().enumerate() {
         for (x, cell) in row.iter().enumerate(){
-
             print!("{},{} ", x, y);
         }
         print!("\n ");
-
     }
 
-    for _y in 0..8 {
-        // let mut row: Vec<bool> = Vec::new();
-        // for _x in 0..4 {
-        //     row.push(true);
-        // }
-        // newmap.push(row);
-    }
-    
     newmap
 }
