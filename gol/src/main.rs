@@ -5,7 +5,7 @@ struct Parms {
     width: u8,
     height: u8,
     life_minimum: f64,
-    generations: u8,
+    generations: u16,
 }
 
 fn main() {
@@ -20,6 +20,7 @@ fn main() {
     
     for gen in 0..parms.generations {
         generate_map(&parms);
+        print!("generation: {}\n", generation);
         generation += 1;
     }
 }
