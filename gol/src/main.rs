@@ -24,14 +24,8 @@ fn main() {
             for x in 0..parms.width {
                 cellcount += 1;
                 let life = rand::random::<f64>() > parms.life_minimum;
-                match life {
-                    true => {
-                        print!("{}", LIVE)
-                    }
-                    false => {
-                        print!("{}", DEAD)
-                    }
-                }
+                let mut cell = if life { LIVE } else { DEAD };
+                print!("{}", cell)
             }
             print!("\n");
         }
