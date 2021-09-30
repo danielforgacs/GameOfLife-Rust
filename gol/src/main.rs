@@ -17,11 +17,11 @@ fn main() {
     };
 
     let map = generate_map(&parms);
-    display_map(map, &0_u16);
+    display_map(&map, &0_u16);
     
     for gen in 1..parms.generations {
         let map = generate_map(&parms);
-        display_map(map, &gen);
+        display_map(&map, &gen);
     }
 }
 
@@ -39,11 +39,11 @@ fn generate_map(parms: &Parms) -> Vec<Vec<bool>> {
     map
 }
 
-fn display_map(map: Vec<Vec<bool>>, gen: &u16) {
+fn display_map(map: &Vec<Vec<bool>>, gen: &u16) {
     print!("generation: {}\n", gen);
     for y in map {
         for x in y {
-            print!("{}", {if x == true {LIVE} else {DEAD}});
+            print!("{}", {if *x == true {LIVE} else {DEAD}});
         }
         print!("\n");
     }
