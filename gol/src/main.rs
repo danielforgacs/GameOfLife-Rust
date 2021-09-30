@@ -26,16 +26,13 @@ fn main() {
 }
 
 fn generate_map(parms: &Parms) -> Vec<Vec<bool>> {
-    let mut cellcount = 0;
     let mut map: Vec<Vec<bool>> = Vec::new();
 
     for _y in 0..parms.height {
         let mut row: Vec<bool> = Vec::new();
         for _x in 0..parms.width {
-            cellcount += 1;
             let life = rand::random::<f64>() > parms.life_minimum;
             row.push(life);
-            let cell = if life { LIVE } else { DEAD };
         }
         map.push(row);
     }
