@@ -99,7 +99,7 @@ fn main() {
     // return;
     display_world(world);
 
-    for _gens in 0..2 {
+    for _gens in 0..25 {
         let temp = generation(world);
         world = temp;
         generations += 1;
