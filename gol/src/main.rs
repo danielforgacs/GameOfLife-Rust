@@ -48,3 +48,9 @@ fn display_map(map: Vec<Vec<bool>>, gen: u16) {
         print!("\n");
     }
 }
+
+fn calc_next_gen_map(map: Vec<Vec<bool>>) -> Vec<Vec<bool>>{
+    let newmap: Vec<Vec<bool>> = Vec::new();
+    newmap
+
+}
