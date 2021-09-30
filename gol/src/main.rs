@@ -18,14 +18,15 @@ fn main() {
 
     let mut generation = 0;
     let mut map = generate_map(&parms);
+    display_map(map);
     
-    for gen in 0..parms.generations {
-        print!("generation: {}\n", generation);
-        generation += 1;
-    }
+    // for gen in 0..parms.generations {
+    //     print!("generation: {}\n", generation);
+    //     generation += 1;
+    // }
 }
 
-fn generate_map(parms: &Parms) {
+fn generate_map(parms: &Parms) -> Vec<Vec<bool>> {
     let mut cellcount = 0;
     let mut map: Vec<Vec<bool>> = Vec::new();
 
@@ -40,5 +41,19 @@ fn generate_map(parms: &Parms) {
         }
         map.push(row);
         print!("\n");
+    }
+    map
+}
+
+fn display_map(map: Vec<Vec<bool>>) {
+    for y in map {
+        for x in y {
+
+            print!("{}", {if x == true {LIVE} else {DEAD}});
+        }
+        print!("\n");
+        // for x in 0..y.len() {
+        //     print!("{}", map[x]);
+        // }
     }
 }
