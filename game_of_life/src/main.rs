@@ -8,7 +8,7 @@ use termion::color;
 use termion::clear;
 
 
-const WIDTH: usize = 700;
+const WIDTH: usize = 800;
 
 fn census(_world: [[u8; WIDTH]; WIDTH]) -> u64 {
     let mut count = 0;
