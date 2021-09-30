@@ -36,10 +36,8 @@ fn generate_map(parms: &Parms) -> Vec<Vec<bool>> {
             let life = rand::random::<f64>() > parms.life_minimum;
             row.push(life);
             let cell = if life { LIVE } else { DEAD };
-            // print!("{}", cell)
         }
         map.push(row);
-        // print!("\n");
     }
     map
 }
