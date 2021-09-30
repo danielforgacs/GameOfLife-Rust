@@ -16,18 +16,24 @@ fn main() {
         generations: 3,
     };
 
-    let mut cellcount = 0;
     let mut generation = 0;
-
+    
     for gen in 0..parms.generations {
-        for y in 0..parms.height {
-            for x in 0..parms.width {
-                cellcount += 1;
-                let life = rand::random::<f64>() > parms.life_minimum;
-                let mut cell = if life { LIVE } else { DEAD };
-                print!("{}", cell)
-            }
-            print!("\n");
+        generate_map(&parms);
+        generation += 1;
+    }
+}
+
+fn generate_map(parms: &Parms) {
+    let mut cellcount = 0;
+
+    for y in 0..parms.height {
+        for x in 0..parms.width {
+            cellcount += 1;
+            let life = rand::random::<f64>() > parms.life_minimum;
+            let cell = if life { LIVE } else { DEAD };
+            print!("{}", cell)
         }
+        print!("\n");
     }
 }
