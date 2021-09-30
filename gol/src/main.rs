@@ -53,10 +53,11 @@ fn calc_next_gen_map(map: &Vec<Vec<bool>>) -> Vec<Vec<bool>>{
     let mut newmap: Vec<Vec<bool>> = Vec::new();
 
     for (y, row) in map.iter().enumerate() {
+        let mut newrow: Vec<bool> = Vec::new();
         for (x, cell) in row.iter().enumerate(){
-            // print!("{},{} ", x, y);
+            newrow.push(true);
         }
-        // print!("\n ");
+        newmap.push(newrow);
     }
 
     newmap
