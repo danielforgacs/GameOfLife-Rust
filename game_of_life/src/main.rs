@@ -178,8 +178,8 @@ fn write_image(pixels: [[u8; WIDTH]; WIDTH], filename: String) {
     }
 
     // imgbuf.save(filename).unwrap();
-    match imgbuf.save(filename) {
-        Ok(_) => {},
+    match imgbuf.save(&filename) {
+        Ok(_) => { println!("saved: {}", filename)},
         // Err(error) => { println!("Could not save for some reason.") }
         Err(error) => { panic!("[ERROR] Could not save for some reason. Check if the \"images\" directory exists!") }
     };
