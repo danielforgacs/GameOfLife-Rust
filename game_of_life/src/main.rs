@@ -8,7 +8,8 @@ use termion::color;
 use termion::clear;
 
 
-const WIDTH: usize = 800;
+const WIDTH: usize = 256;
+const GENS: u8 = 50;
 
 fn census(_world: [[u8; WIDTH]; WIDTH]) -> u64 {
     let mut count = 0;
@@ -102,7 +103,7 @@ fn main() {
     // return;
     // display_world(world);
 
-    for _gens in 0..25 {
+    for _gens in 0..GENS {
         let temp = generation(world);
         world = temp;
         generations += 1;
