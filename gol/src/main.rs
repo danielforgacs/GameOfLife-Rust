@@ -54,9 +54,9 @@ fn calc_next_gen_map(map: &Vec<Vec<bool>>) -> Vec<Vec<bool>>{
 
     for (y, row) in map.iter().enumerate() {
         for (x, cell) in row.iter().enumerate(){
-            print!("{},{} ", x, y);
+            // print!("{},{} ", x, y);
         }
-        print!("\n ");
+        // print!("\n ");
     }
 
     newmap
