@@ -16,36 +16,36 @@ fn main() {
         generations: 3,
     };
 
-    let mut generation = 0;
-    let mut map = generate_map(&parms);
-    display_map(map);
+    let map = generate_map(&parms);
+    display_map(map, 0_u16);
     
-    // for gen in 0..parms.generations {
-    //     print!("generation: {}\n", generation);
-    //     generation += 1;
-    // }
+    for gen in 1..parms.generations {
+        let map = generate_map(&parms);
+        display_map(map, gen);
+    }
 }
 
 fn generate_map(parms: &Parms) -> Vec<Vec<bool>> {
     let mut cellcount = 0;
     let mut map: Vec<Vec<bool>> = Vec::new();
 
-    for y in 0..parms.height {
+    for _y in 0..parms.height {
         let mut row: Vec<bool> = Vec::new();
-        for x in 0..parms.width {
+        for _x in 0..parms.width {
             cellcount += 1;
             let life = rand::random::<f64>() > parms.life_minimum;
             row.push(life);
             let cell = if life { LIVE } else { DEAD };
-            print!("{}", cell)
+            // print!("{}", cell)
         }
         map.push(row);
-        print!("\n");
+        // print!("\n");
     }
     map
 }
 
-fn display_map(map: Vec<Vec<bool>>) {
+fn display_map(map: Vec<Vec<bool>>, gen: u16) {
+    print!("generation: {}\n", gen);
     for y in map {
         for x in y {
             print!("{}", {if x == true {LIVE} else {DEAD}});
