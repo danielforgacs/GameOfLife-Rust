@@ -17,9 +17,9 @@ fn main() {
     };
 
     let mut generation = 0;
+    let mut map = generate_map(&parms);
     
     for gen in 0..parms.generations {
-        generate_map(&parms);
         print!("generation: {}\n", generation);
         generation += 1;
     }
@@ -27,14 +27,18 @@ fn main() {
 
 fn generate_map(parms: &Parms) {
     let mut cellcount = 0;
+    let mut map: Vec<Vec<bool>> = Vec::new();
 
     for y in 0..parms.height {
+        let mut row: Vec<bool> = Vec::new();
         for x in 0..parms.width {
             cellcount += 1;
             let life = rand::random::<f64>() > parms.life_minimum;
+            row.push(life);
             let cell = if life { LIVE } else { DEAD };
             print!("{}", cell)
         }
+        map.push(row);
         print!("\n");
     }
 }
