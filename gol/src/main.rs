@@ -9,12 +9,21 @@ struct Parms {
 }
 
 fn main() {
+    let args: Vec<String> = std::env::args().collect();
     let parms = Parms {
-        width: 64,
+        width: {
+            if args.len() > 1 {
+                args[1].parse::<u8>().unwrap()
+            } else {
+                64
+            }
+        },
         height: 32,
         life_minimum: 0.93,
-        generations: 50,
+        generations: 4,
     };
+    // println!("{}", parms.width);
+    // return;
 
     let mut map = generate_map(&parms);
     display_map(&map, &0_u16);
