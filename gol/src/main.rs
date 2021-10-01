@@ -131,15 +131,6 @@ fn main() {
             );
             world.display();
     }
-    // return;
-
-    // let mut map = generate_map(&parms);
-    // display_map(&map, &0_u16);
-
-    // for gen in 1..parms.generations {
-    //     map = calc_next_gen_map(&map);
-    //     display_map(&map, &gen);
-    // }
 
     print!(
         "==============================\n\
