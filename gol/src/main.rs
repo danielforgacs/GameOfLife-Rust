@@ -18,7 +18,13 @@ fn main() {
                 64
             }
         },
-        height: 32,
+        height: {
+            if args.len() > 2 {
+                args[2].parse::<u8>().unwrap()
+            } else {
+                32
+            }
+        },
         life_minimum: 0.93,
         generations: 4,
     };
@@ -69,7 +75,7 @@ fn calc_next_gen_map(map: &Vec<Vec<bool>>) -> Vec<Vec<bool>> {
 
     for (y, row) in map.iter().enumerate() {
         let mut newrow: Vec<bool> = Vec::new();
-        for (x, cell) in row.iter().enumerate() {
+        for (x, _cell) in row.iter().enumerate() {
             let neighbour_count = count_cell_neighbours(map, &x, &y);
             if map[y][x] == true {
                 match neighbour_count {
