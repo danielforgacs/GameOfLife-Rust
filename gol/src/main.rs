@@ -15,7 +15,6 @@ enum CellLife {
     Dead,
 }
 
-
 struct Parms {
     width: u8,
     height: u8,
@@ -34,8 +33,8 @@ fn main() {
             }
         },
         height: {
-            if args.len() > WIDTH_ARGS_INDEX+1 {
-                args[WIDTH_ARGS_INDEX+1].parse::<u8>().unwrap()
+            if args.len() > WIDTH_ARGS_INDEX + 1 {
+                args[WIDTH_ARGS_INDEX + 1].parse::<u8>().unwrap()
             } else {
                 HEIGHT
             }
@@ -55,8 +54,6 @@ fn main() {
             }
         },
     };
-    // println!("{}", parms.width);
-    // return;
 
     let mut map = generate_map(&parms);
     display_map(&map, &0_u16);
@@ -94,11 +91,6 @@ fn display_map(map: &Vec<Vec<CellLife>>, gen: &u16) {
                     CellLife::Alive => LIVE,
                     _ => DEAD,
                 }
-                // if *x == true {
-                //     LIVE
-                // } else {
-                //     DEAD
-                // }
             });
         }
         print!("\n");
@@ -112,17 +104,16 @@ fn calc_next_gen_map(map: &Vec<Vec<CellLife>>) -> Vec<Vec<CellLife>> {
         let mut newrow: Vec<CellLife> = Vec::new();
         for (x, _cell) in row.iter().enumerate() {
             let neighbour_count = count_cell_neighbours(map, &x, &y);
-            if map[y][x] == CellLife::Alive {
-                match neighbour_count {
+            match map[y][x] {
+                CellLife::Alive => match neighbour_count {
                     0 | 1 => newrow.push(CellLife::Dead),
                     2 | 3 => newrow.push(CellLife::Alive),
                     _ => newrow.push(CellLife::Dead),
-                }
-            } else {
-                match neighbour_count {
+                },
+                _ => match neighbour_count {
                     3 | 4 => newrow.push(CellLife::Alive),
                     _ => newrow.push(CellLife::Dead),
-                }
+                },
             }
         }
         newmap.push(newrow);
@@ -152,8 +143,11 @@ fn count_cell_neighbours(map: &Vec<Vec<CellLife>>, x: &usize, y: &usize) -> u16 
                 continue;
             }
 
-            if map[ny][nx] == CellLife::Alive {
-                count += 1;
+            match map[ny][nx] {
+                CellLife::Alive => {
+                    count += 1;
+                }
+                _ => {}
             }
         }
     }
