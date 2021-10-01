@@ -1,5 +1,5 @@
 const LIVE: char = 'O';
-const DEAD: char = ' ';
+const DEAD: char = '.';
 
 struct Parms {
     width: u8,
@@ -55,13 +55,21 @@ fn calc_next_gen_map(map: &Vec<Vec<bool>>) -> Vec<Vec<bool>>{
     for (y, row) in map.iter().enumerate() {
         let mut newrow: Vec<bool> = Vec::new();
         for (x, cell) in row.iter().enumerate(){
-            // print!("[{}.{}] ", x, y);
             let neighbour_count = count_cell_neighbours(map, &x, &y);
-            newrow.push(false);
-            print!("{} ", neighbour_count);
+            if map[y][x] == true {
+                match neighbour_count {
+                    0 | 1 => newrow.push(false),
+                    2 | 3 => newrow.push(true),
+                    _ => newrow.push(false),
+                }
+            } else {
+                match neighbour_count {
+                    3 => newrow.push(true),
+                    _ => newrow.push(false),
+                }
+            }
         }
         newmap.push(newrow);
-        // print!("\n");
     }
 
     newmap
