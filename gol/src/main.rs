@@ -1,6 +1,7 @@
 const LIVE: char = '/';
 const DEAD: char = '\\';
 const WIDTH: u8 = 16;
+const WIDTH_ARGS_INDEX: usize = 1;
 const HEIGHT: u8 = 8;
 const LIFE_LIMIT: f64 = 0.93;
 const GENERATIONS: u16 = 2;
@@ -17,15 +18,15 @@ fn main() {
     let args: Vec<String> = std::env::args().collect();
     let parms = Parms {
         width: {
-            if args.len() > 1 {
-                args[1].parse::<u8>().unwrap()
+            if args.len() > WIDTH_ARGS_INDEX {
+                args[WIDTH_ARGS_INDEX].parse::<u8>().unwrap()
             } else {
                 WIDTH
             }
         },
         height: {
-            if args.len() > 2 {
-                args[2].parse::<u8>().unwrap()
+            if args.len() > WIDTH_ARGS_INDEX+1 {
+                args[WIDTH_ARGS_INDEX+1].parse::<u8>().unwrap()
             } else {
                 HEIGHT
             }
