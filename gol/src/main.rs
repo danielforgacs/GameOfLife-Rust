@@ -197,19 +197,19 @@ fn generate_map(parms: &Parms) -> Vec<Vec<Cell>> {
     map
 }
 
-fn display_map(map: &Vec<Vec<Cell>>, gen: &u16) {
-    for y in map {
-        for x in y {
-            print!("{}", {
-                match x.life {
-                    CellLife::Alive => LIVE,
-                    _ => DEAD,
-                }
-            });
-        }
-        print!("\n");
-    }
-}
+// fn display_map(map: &Vec<Vec<Cell>>, gen: &u16) {
+//     for y in map {
+//         for x in y {
+//             print!("{}", {
+//                 match x.life {
+//                     CellLife::Alive => LIVE,
+//                     _ => DEAD,
+//                 }
+//             });
+//         }
+//         print!("\n");
+//     }
+// }
 
 fn calc_next_gen_map(map: &Vec<Vec<Cell>>) -> Vec<Vec<Cell>> {
     let mut newmap: Vec<Vec<Cell>> = Vec::new();
