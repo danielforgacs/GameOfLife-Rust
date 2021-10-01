@@ -10,20 +10,20 @@ struct Parms {
 
 fn main() {
     let parms = Parms {
-        width: 5,
-        height: 5,
+        width: 7,
+        height: 7,
         life_minimum: 0.8,
         generations: 3,
     };
 
     let map = generate_map(&parms);
-    let map: Vec<Vec<bool>> = vec![
-        vec![false, false, false, false, false],
-        vec![false, false, false, false, false],
-        vec![false, false, true, false, false],
-        vec![false, false, true, false, false],
-        vec![false, false, false, false, false],
-    ];
+    // let map: Vec<Vec<bool>> = vec![
+    //     vec![false, false, false, false, false],
+    //     vec![false, false, false, false, false],
+    //     vec![false, false, true, false, false],
+    //     vec![false, false, true, false, false],
+    //     vec![false, false, false, false, false],
+    // ];
     display_map(&map, &0_u16);
     
     for gen in 1..parms.generations {
@@ -63,20 +63,22 @@ fn calc_next_gen_map(map: &Vec<Vec<bool>>) -> Vec<Vec<bool>>{
         let mut newrow: Vec<bool> = Vec::new();
         for (x, cell) in row.iter().enumerate(){
             let neighbour_count = count_cell_neighbours(map, &x, &y);
+            print!("{} ", neighbour_count);
             if map[y][x] == true {
                 match neighbour_count {
-                    0 | 1 => newrow.push(true),
+                    0 | 1 => newrow.push(false),
                     2 | 3 => newrow.push(true),
-                    _ => newrow.push(true),
+                    _ => newrow.push(false),
                 }
             } else {
                 match neighbour_count {
                     3 => newrow.push(true),
-                    _ => newrow.push(true),
+                    _ => newrow.push(false),
                 }
             }
         }
         newmap.push(newrow);
+        print!("\n");
     }
 
     newmap
@@ -94,9 +96,13 @@ fn count_cell_neighbours(map: &Vec<Vec<bool>>, x: &usize, y: &usize) -> u8 {
             if nx < 0 || ny < 0 || ny > { map.len() - 1} as i8 || nx > { map[0].len() -1 } as i8 {
                 continue;
             }
-            
+
             let nx = nx as usize;
             let ny = ny as usize;
+            
+            if (nx, ny) == (*x, *y) {
+                continue;
+            }
 
             if map[ny][nx] == true {
                 count += 1;
