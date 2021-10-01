@@ -23,7 +23,7 @@ struct World {
 }
 
 impl World {
-    fn new(&self, parms: Parms) -> Self {
+    fn new(parms: &Parms) -> Self {
         World {
             width: parms.width,
             height: parms.height,
@@ -77,6 +77,7 @@ fn main() {
         },
     };
 
+    let world = World::new(&parms);
     let mut map = generate_map(&parms);
     display_map(&map, &0_u16);
 
