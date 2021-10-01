@@ -1,5 +1,10 @@
-const LIVE: char = 'x';
-const DEAD: char = '-';
+const LIVE: char = '/';
+const DEAD: char = '\\';
+const WIDTH: u8 = 16;
+const HEIGHT: u8 = 8;
+const LIFE_LIMIT: f64 = 0.93;
+const GENERATIONS: u16 = 2;
+
 
 struct Parms {
     width: u8,
@@ -15,28 +20,28 @@ fn main() {
             if args.len() > 1 {
                 args[1].parse::<u8>().unwrap()
             } else {
-                64
+                WIDTH
             }
         },
         height: {
             if args.len() > 2 {
                 args[2].parse::<u8>().unwrap()
             } else {
-                32
+                HEIGHT
             }
         },
         life_minimum: {
             if args.len() > 3 {
                 args[3].parse::<f64>().unwrap()
             } else {
-                0.93
+                LIFE_LIMIT
             }
         },
         generations: {
             if args.len() > 4 {
                 args[4].parse::<u16>().unwrap()
             } else {
-                2
+                GENERATIONS
             }
         },
     };
