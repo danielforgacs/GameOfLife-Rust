@@ -25,8 +25,20 @@ fn main() {
                 32
             }
         },
-        life_minimum: 0.93,
-        generations: 4,
+        life_minimum: {
+            if args.len() > 3 {
+                args[3].parse::<f64>().unwrap()
+            } else {
+                0.93
+            }
+        },
+        generations: {
+            if args.len() > 4 {
+                args[4].parse::<u16>().unwrap()
+            } else {
+                2
+            }
+        },
     };
     // println!("{}", parms.width);
     // return;
