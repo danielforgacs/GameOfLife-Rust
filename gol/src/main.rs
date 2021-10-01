@@ -78,6 +78,12 @@ impl World {
             print!("\n");
         }
     }
+
+    fn next_generation(&mut self) {
+        let newcells = calc_next_gen_map(&self.cells);
+        self.cells = newcells;
+        self.generation += 1;
+    }
 }
 
 enum CellLife {
@@ -125,7 +131,14 @@ fn main() {
         },
     };
 
-    let world = World::new(&parms);
+    let mut world = World::new(&parms);
+    print!(
+        "generation: {}\n\
+        alive count: {}\n",
+        world.generation, world.alive_count()
+    );
+    world.display();
+    world.next_generation();
     print!(
         "generation: {}\n\
         alive count: {}\n",
