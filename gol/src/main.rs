@@ -30,6 +30,10 @@ impl World {
             cells: Vec::new(),
         }
     }
+
+    fn alive_count(&self) -> u64 {
+        3
+    }
 }
 
 enum CellLife {
@@ -78,6 +82,12 @@ fn main() {
     };
 
     let world = World::new(&parms);
+    print!(
+        "generation: {}\n\
+        alive count: {}\n",
+        0, world.alive_count()
+    );
+
     let mut map = generate_map(&parms);
     display_map(&map, &0_u16);
 
