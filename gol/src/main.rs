@@ -65,14 +65,14 @@ fn calc_next_gen_map(map: &Vec<Vec<bool>>) -> Vec<Vec<bool>>{
             let neighbour_count = count_cell_neighbours(map, &x, &y);
             if map[y][x] == true {
                 match neighbour_count {
-                    0 | 1 => newrow.push(false),
+                    0 | 1 => newrow.push(true),
                     2 | 3 => newrow.push(true),
-                    _ => newrow.push(false),
+                    _ => newrow.push(true),
                 }
             } else {
                 match neighbour_count {
                     3 => newrow.push(true),
-                    _ => newrow.push(false),
+                    _ => newrow.push(true),
                 }
             }
         }
