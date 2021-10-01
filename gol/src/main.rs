@@ -12,13 +12,13 @@ const WIDTH_ARGS_INDEX: usize = 3;
 
 struct Cell {
     life: CellLife,
-    x: u16,
-    y: u16,
+    _x: u16,
+    _y: u16,
 }
 
 struct World {
-    width: u16,
-    height: u16,
+    _width: u16,
+    _height: u16,
     generation: u16,
     cells: Vec<Vec<Cell>>,
 }
@@ -26,34 +26,14 @@ struct World {
 impl World {
     fn new(parms: &Parms) -> Self {
         let mut world = World {
-            width: parms.width,
-            height: parms.height,
+            _width: parms.width,
+            _height: parms.height,
             generation: 0,
             cells: Vec::new(),
         };
 
-        for y in 0..world.height {
-            let mut row: Vec<Cell> = Vec::new();
-            for x in 0..world.width {
-                let life = rand::random::<f64>() > parms.life_minimum;
-                let life = match life {
-                    true => CellLife::Alive,
-                    _ => CellLife::Dead,
-                };
-    
-                let cell = Cell {
-                    life: life,
-                    x: x,
-                    y: y,
-                };
-                // print!("({},{}:{}) ", &cell.x, &cell.y, { match cell.life { CellLife::Alive => LIVE, _ => DEAD } });
-                row.push(cell);
-            }
-            // print!("\n");
-            world.cells.push(row);
-
-        }
-
+        let w = generate_map(&parms);
+        world.cells = w;
         world
     }
 
@@ -188,28 +168,14 @@ fn generate_map(parms: &Parms) -> Vec<Vec<Cell>> {
             };
             row.push(Cell {
                 life: life,
-                x: x,
-                y: y,
+                _x: x,
+                _y: y,
             });
         }
         map.push(row);
     }
     map
 }
-
-// fn display_map(map: &Vec<Vec<Cell>>, gen: &u16) {
-//     for y in map {
-//         for x in y {
-//             print!("{}", {
-//                 match x.life {
-//                     CellLife::Alive => LIVE,
-//                     _ => DEAD,
-//                 }
-//             });
-//         }
-//         print!("\n");
-//     }
-// }
 
 fn calc_next_gen_map(map: &Vec<Vec<Cell>>) -> Vec<Vec<Cell>> {
     let mut newmap: Vec<Vec<Cell>> = Vec::new();
@@ -234,8 +200,8 @@ fn calc_next_gen_map(map: &Vec<Vec<Cell>>) -> Vec<Vec<Cell>> {
 
             let newcell = Cell {
                 life: life,
-                x: x as u16,
-                y: y as u16,
+                _x: x as u16,
+                _y: y as u16,
             };
 
             newrow.push(newcell);
