@@ -75,16 +75,16 @@ fn calc_next_gen_map(map: &Vec<Vec<bool>>) -> Vec<Vec<bool>>{
     newmap
 }
 
-fn count_cell_neighbours(map: &Vec<Vec<bool>>, x: &usize, y: &usize) -> u8 {
+fn count_cell_neighbours(map: &Vec<Vec<bool>>, x: &usize, y: &usize) -> u16 {
     let mut count = 0;
-    let coords: Vec<i8> = vec![-1, 0, 1];
+    let coords: Vec<i16> = vec![-1, 0, 1];
 
     for offset_x in &coords {
         for offset_y in &coords {
-            let nx = *x as i8 + *offset_x;
-            let ny = *y as i8 + *offset_y;
+            let nx = *x as i16 + *offset_x;
+            let ny = *y as i16 + *offset_y;
             
-            if nx < 0 || ny < 0 || ny > { map.len() - 1} as i8 || nx > { map[0].len() -1 } as i8 {
+            if nx < 0 || ny < 0 || ny > { map.len() - 1} as i16 || nx > { map[0].len() -1 } as i16 {
                 continue;
             }
 
