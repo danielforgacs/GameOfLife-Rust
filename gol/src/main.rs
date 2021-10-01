@@ -10,10 +10,10 @@ struct Parms {
 
 fn main() {
     let parms = Parms {
-        width: 16,
-        height: 8,
+        width: 128,
+        height: 30,
         life_minimum: 0.8,
-        generations: 5,
+        generations: 50,
     };
 
     let mut map = generate_map(&parms);
