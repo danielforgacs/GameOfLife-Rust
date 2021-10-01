@@ -16,6 +16,22 @@ struct Cell {
     y: u16,
 }
 
+struct World {
+    width: u16,
+    height: u16,
+    cells: Vec<Vec<Cell>>,
+}
+
+impl World {
+    fn new(&self, parms: Parms) -> Self {
+        World {
+            width: parms.width,
+            height: parms.height,
+            cells: Vec::new(),
+        }
+    }
+}
+
 enum CellLife {
     Alive,
     Dead,
