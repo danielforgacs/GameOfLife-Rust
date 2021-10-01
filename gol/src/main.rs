@@ -11,9 +11,9 @@ struct Parms {
 fn main() {
     let parms = Parms {
         width: 128,
-        height: 30,
+        height: 32,
         life_minimum: 0.8,
-        generations: 50,
+        generations: 250,
     };
 
     let mut map = generate_map(&parms);
