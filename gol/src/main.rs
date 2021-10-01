@@ -10,23 +10,30 @@ struct Parms {
 
 fn main() {
     let parms = Parms {
-        width: 4,
-        height: 4,
+        width: 8,
+        height: 5,
         life_minimum: 0.8,
-        generations: 3,
+        generations: 5,
     };
 
     let map = generate_map(&parms);
-    let map: Vec<Vec<bool>> = vec![
-        vec![false, false, false, false],
-        vec![false, false, false, false],
-        vec![false, false, true, false],
-        vec![false, false, true, false],
+    let mut map: Vec<Vec<bool>> = vec![
+        vec![false, false, false, false, false, false, false, false],
+        vec![false, false, false, false, false, false, false, false],
+        vec![false, true,  true, false, false, false, false, false],
+        vec![false, false, true, true, false, false, false, false],
+        vec![false, false, true, false, false, false, false, false],
     ];
     display_map(&map, &0_u16);
-    
+    // let map = calc_next_gen_map(&map);
+    // display_map(&map, &0);
+    // let map = calc_next_gen_map(&map);
+    // display_map(&map, &0);
+    // let mut map = calc_next_gen_map(&map);
+    // display_map(&map, &0);
+
     for gen in 1..parms.generations {
-        let map = calc_next_gen_map(&map);
+        map = calc_next_gen_map(&map);
         display_map(&map, &gen);
     }
 }
