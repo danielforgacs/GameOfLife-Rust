@@ -141,18 +141,18 @@ fn main() {
 
     for _k in 0..parms.generations {
 
-        world.next_generation();
-        print!(
-            "generation: {}\n\
-            alive count: {}\n",
-            world.generation, world.alive_count()
-        );
-        world.display();
+            world.next_generation();
+            print!(
+                "generation: {}\n\
+                alive count: {}\n",
+                world.generation, world.alive_count()
+            );
+            world.display();
     }
-    return;
+    // return;
 
-    let mut map = generate_map(&parms);
-    display_map(&map, &0_u16);
+    // let mut map = generate_map(&parms);
+    // display_map(&map, &0_u16);
 
     // for gen in 1..parms.generations {
     //     map = calc_next_gen_map(&map);
