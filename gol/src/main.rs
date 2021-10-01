@@ -85,6 +85,17 @@ fn main() {
         map = calc_next_gen_map(&map);
         display_map(&map, &gen);
     }
+
+    print!(
+        "dimexnsions: {dimx}x{dimy}\n\
+        life treshhold: {lif}\n\
+        generations: {gen}\n\
+        ",
+        lif=parms.life_minimum,
+        dimx=parms.width,
+        dimy=parms.height,
+        gen=parms.generations,
+    );
 }
 
 fn generate_map(parms: &Parms) -> Vec<Vec<Cell>> {
@@ -111,7 +122,6 @@ fn generate_map(parms: &Parms) -> Vec<Vec<Cell>> {
 }
 
 fn display_map(map: &Vec<Vec<Cell>>, gen: &u16) {
-    print!("generation: {}\n", gen);
     for y in map {
         for x in y {
             print!("{}", {
