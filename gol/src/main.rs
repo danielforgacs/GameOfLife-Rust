@@ -19,20 +19,64 @@ struct Cell {
 struct World {
     width: u16,
     height: u16,
+    generation: u16,
     cells: Vec<Vec<Cell>>,
 }
 
 impl World {
     fn new(parms: &Parms) -> Self {
-        World {
+        let mut world = World {
             width: parms.width,
             height: parms.height,
+            generation: 0,
             cells: Vec::new(),
+        };
+
+        for y in 0..world.height {
+            let mut row: Vec<Cell> = Vec::new();
+            for x in 0..world.width {
+                let life = rand::random::<f64>() > parms.life_minimum;
+                let life = match life {
+                    true => CellLife::Alive,
+                    _ => CellLife::Dead,
+                };
+    
+                let cell = Cell {
+                    life: life,
+                    x: x,
+                    y: y,
+                };
+                // print!("({},{}:{}) ", &cell.x, &cell.y, { match cell.life { CellLife::Alive => LIVE, _ => DEAD } });
+                row.push(cell);
+            }
+            // print!("\n");
+            world.cells.push(row);
+
         }
+
+        world
     }
 
     fn alive_count(&self) -> u64 {
-        3
+        let mut alive_count = 0_u64;
+        for row in &self.cells {
+            for cell in row {
+                match cell.life {
+                    CellLife::Alive => alive_count += 1,
+                    _ => {},
+                }
+            }
+        };
+        alive_count
+    }
+
+    fn display(&self) {
+        for row in &self.cells {
+            for cell in row {
+                print!("{}", match cell.life{ CellLife::Alive => { LIVE }, _ => { DEAD }});
+            } 
+            print!("\n");
+        }
     }
 }
 
@@ -85,8 +129,10 @@ fn main() {
     print!(
         "generation: {}\n\
         alive count: {}\n",
-        0, world.alive_count()
+        world.generation, world.alive_count()
     );
+    world.display();
+    return;
 
     let mut map = generate_map(&parms);
     display_map(&map, &0_u16);
