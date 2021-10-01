@@ -10,27 +10,14 @@ struct Parms {
 
 fn main() {
     let parms = Parms {
-        width: 8,
-        height: 5,
+        width: 16,
+        height: 8,
         life_minimum: 0.8,
         generations: 5,
     };
 
     let mut map = generate_map(&parms);
-    // let mut map: Vec<Vec<bool>> = vec![
-    //     vec![false, false, false, false, false, false, false, false],
-    //     vec![false, false, false, false, false, false, false, false],
-    //     vec![false, true,  true, false, false, false, false, false],
-    //     vec![false, false, true, true, false, false, false, false],
-    //     vec![false, false, true, false, false, false, false, false],
-    // ];
     display_map(&map, &0_u16);
-    // let map = calc_next_gen_map(&map);
-    // display_map(&map, &0);
-    // let map = calc_next_gen_map(&map);
-    // display_map(&map, &0);
-    // let mut map = calc_next_gen_map(&map);
-    // display_map(&map, &0);
 
     for gen in 1..parms.generations {
         map = calc_next_gen_map(&map);
@@ -69,7 +56,6 @@ fn calc_next_gen_map(map: &Vec<Vec<bool>>) -> Vec<Vec<bool>>{
         let mut newrow: Vec<bool> = Vec::new();
         for (x, cell) in row.iter().enumerate(){
             let neighbour_count = count_cell_neighbours(map, &x, &y);
-            // print!("{}", neighbour_count);
             if map[y][x] == true {
                 match neighbour_count {
                     0 | 1 => newrow.push(false),
@@ -84,7 +70,6 @@ fn calc_next_gen_map(map: &Vec<Vec<bool>>) -> Vec<Vec<bool>>{
             }
         }
         newmap.push(newrow);
-        // print!("\n");
     }
 
     newmap
