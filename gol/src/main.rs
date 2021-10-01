@@ -1,5 +1,5 @@
 const LIVE: char = 'O';
-const DEAD: char = '.';
+const DEAD: char = '-';
 
 struct Parms {
     width: u8,
@@ -10,13 +10,20 @@ struct Parms {
 
 fn main() {
     let parms = Parms {
-        width: 16,
-        height: 8,
+        width: 5,
+        height: 5,
         life_minimum: 0.8,
         generations: 3,
     };
 
     let map = generate_map(&parms);
+    let map: Vec<Vec<bool>> = vec![
+        vec![false, false, false, false, false],
+        vec![false, false, false, false, false],
+        vec![false, false, true, false, false],
+        vec![false, false, true, false, false],
+        vec![false, false, false, false, false],
+    ];
     display_map(&map, &0_u16);
     
     for gen in 1..parms.generations {
