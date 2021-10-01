@@ -70,30 +70,35 @@ fn main() {
     }
 }
 
-fn generate_map(parms: &Parms) -> Vec<Vec<CellLife>> {
-    let mut map: Vec<Vec<CellLife>> = Vec::new();
+fn generate_map(parms: &Parms) -> Vec<Vec<Cell>> {
+    let mut map: Vec<Vec<Cell>> = Vec::new();
 
-    for _y in 0..parms.height {
-        let mut row: Vec<CellLife> = Vec::new();
-        for _x in 0..parms.width {
+    for y in 0..parms.height {
+        let mut row: Vec<Cell> = Vec::new();
+
+        for x in 0..parms.width {
             let life = rand::random::<f64>() > parms.life_minimum;
             let life = match life {
                 true => CellLife::Alive,
                 _ => CellLife::Dead,
             };
-            row.push(life);
+            row.push(Cell {
+                life: life,
+                x: x,
+                y: y,
+            });
         }
         map.push(row);
     }
     map
 }
 
-fn display_map(map: &Vec<Vec<CellLife>>, gen: &u16) {
+fn display_map(map: &Vec<Vec<Cell>>, gen: &u16) {
     print!("generation: {}\n", gen);
     for y in map {
         for x in y {
             print!("{}", {
-                match *x {
+                match x.life {
                     CellLife::Alive => LIVE,
                     _ => DEAD,
                 }
@@ -103,32 +108,42 @@ fn display_map(map: &Vec<Vec<CellLife>>, gen: &u16) {
     }
 }
 
-fn calc_next_gen_map(map: &Vec<Vec<CellLife>>) -> Vec<Vec<CellLife>> {
-    let mut newmap: Vec<Vec<CellLife>> = Vec::new();
+fn calc_next_gen_map(map: &Vec<Vec<Cell>>) -> Vec<Vec<Cell>> {
+    let mut newmap: Vec<Vec<Cell>> = Vec::new();
 
     for (y, row) in map.iter().enumerate() {
-        let mut newrow: Vec<CellLife> = Vec::new();
+        let mut newrow: Vec<Cell> = Vec::new();
+
         for (x, _cell) in row.iter().enumerate() {
             let neighbour_count = count_cell_neighbours(map, &x, &y);
-            match map[y][x] {
+            let life = match map[y][x].life {
                 CellLife::Alive => match neighbour_count {
-                    0 | 1 => newrow.push(CellLife::Dead),
-                    2 | 3 => newrow.push(CellLife::Alive),
-                    _ => newrow.push(CellLife::Dead),
+                    0 | 1 => CellLife::Dead,
+                    2 | 3 => CellLife::Alive,
+                    _ => CellLife::Dead,
                 },
                 _ => match neighbour_count {
-                    3 | 4 => newrow.push(CellLife::Alive),
-                    _ => newrow.push(CellLife::Dead),
+                    3 | 4 => CellLife::Alive,
+                    _ => CellLife::Dead,
                 },
-            }
+            };
+
+            let newcell = Cell {
+                life: life,
+                x: x as u16,
+                y: y as u16,
+            };
+
+            newrow.push(newcell);
         }
+
         newmap.push(newrow);
     }
 
     newmap
 }
 
-fn count_cell_neighbours(map: &Vec<Vec<CellLife>>, x: &usize, y: &usize) -> u16 {
+fn count_cell_neighbours(map: &Vec<Vec<Cell>>, x: &usize, y: &usize) -> u16 {
     let mut count = 0;
     let coords: Vec<i16> = vec![-1, 0, 1];
 
@@ -149,7 +164,7 @@ fn count_cell_neighbours(map: &Vec<Vec<CellLife>>, x: &usize, y: &usize) -> u16 
                 continue;
             }
 
-            match map[ny][nx] {
+            match map[ny][nx].life {
                 CellLife::Alive => {
                     count += 1;
                 }
