@@ -1,10 +1,14 @@
 const LIVE: char = '/';
 const DEAD: char = '\\';
+
 const WIDTH: u8 = 16;
-const WIDTH_ARGS_INDEX: usize = 1;
 const HEIGHT: u8 = 8;
 const LIFE_LIMIT: f64 = 0.93;
 const GENERATIONS: u16 = 2;
+
+const LIFE_LIMIT_ARGS_INDEX: usize = 1;
+const GENERATIONS_ARGS_INDEX: usize = 2;
+const WIDTH_ARGS_INDEX: usize = 3;
 
 
 struct Parms {
@@ -32,15 +36,15 @@ fn main() {
             }
         },
         life_minimum: {
-            if args.len() > 3 {
-                args[3].parse::<f64>().unwrap()
+            if args.len() > LIFE_LIMIT_ARGS_INDEX {
+                args[LIFE_LIMIT_ARGS_INDEX].parse::<f64>().unwrap()
             } else {
                 LIFE_LIMIT
             }
         },
         generations: {
-            if args.len() > 4 {
-                args[4].parse::<u16>().unwrap()
+            if args.len() > GENERATIONS_ARGS_INDEX {
+                args[GENERATIONS_ARGS_INDEX].parse::<u16>().unwrap()
             } else {
                 GENERATIONS
             }
