@@ -3,7 +3,7 @@ const DEAD: char = ' ';
 
 const WIDTH: u16 = 16;
 const HEIGHT: u16 = 8;
-const LIFE_LIMIT: f64 = 0.93;
+const LIFE_LIMIT: f64 = 0.7;
 const GENERATIONS: u16 = 2;
 
 const LIFE_LIMIT_ARGS_INDEX: usize = 1;
@@ -133,7 +133,8 @@ fn main() {
 
     let mut world = World::new(&parms);
     print!(
-        "generation: {}\n\
+        "-------------------------\n\
+        generation: {}\n\
         alive count: {}\n",
         world.generation, world.alive_count()
     );
@@ -143,7 +144,8 @@ fn main() {
 
             world.next_generation();
             print!(
-                "generation: {}\n\
+                "-------------------------\n\
+                generation: {}\n\
                 alive count: {}\n",
                 world.generation, world.alive_count()
             );
@@ -160,7 +162,8 @@ fn main() {
     // }
 
     print!(
-        "dimexnsions: {dimx}x{dimy}\n\
+        "==============================\n\
+        dimexnsions: {dimx}x{dimy}\n\
         life treshhold: {lif}\n\
         generations: {gen}\n\
         ",
@@ -223,7 +226,8 @@ fn calc_next_gen_map(map: &Vec<Vec<Cell>>) -> Vec<Vec<Cell>> {
                     _ => CellLife::Dead,
                 },
                 _ => match neighbour_count {
-                    3 | 4 => CellLife::Alive,
+                    3 => CellLife::Alive,
+                    4 => CellLife::Dead,
                     _ => CellLife::Dead,
                 },
             };
