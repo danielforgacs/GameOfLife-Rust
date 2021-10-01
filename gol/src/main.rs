@@ -10,10 +10,10 @@ struct Parms {
 
 fn main() {
     let parms = Parms {
-        width: 128,
+        width: 64,
         height: 32,
-        life_minimum: 0.8,
-        generations: 250,
+        life_minimum: 0.93,
+        generations: 50,
     };
 
     let mut map = generate_map(&parms);
@@ -43,18 +43,24 @@ fn display_map(map: &Vec<Vec<bool>>, gen: &u16) {
     print!("generation: {}\n", gen);
     for y in map {
         for x in y {
-            print!("{}", {if *x == true {LIVE} else {DEAD}});
+            print!("{}", {
+                if *x == true {
+                    LIVE
+                } else {
+                    DEAD
+                }
+            });
         }
         print!("\n");
     }
 }
 
-fn calc_next_gen_map(map: &Vec<Vec<bool>>) -> Vec<Vec<bool>>{
+fn calc_next_gen_map(map: &Vec<Vec<bool>>) -> Vec<Vec<bool>> {
     let mut newmap: Vec<Vec<bool>> = Vec::new();
 
     for (y, row) in map.iter().enumerate() {
         let mut newrow: Vec<bool> = Vec::new();
-        for (x, cell) in row.iter().enumerate(){
+        for (x, cell) in row.iter().enumerate() {
             let neighbour_count = count_cell_neighbours(map, &x, &y);
             if map[y][x] == true {
                 match neighbour_count {
@@ -64,7 +70,7 @@ fn calc_next_gen_map(map: &Vec<Vec<bool>>) -> Vec<Vec<bool>>{
                 }
             } else {
                 match neighbour_count {
-                    3 => newrow.push(true),
+                    3 | 4 => newrow.push(true),
                     _ => newrow.push(false),
                 }
             }
@@ -83,14 +89,15 @@ fn count_cell_neighbours(map: &Vec<Vec<bool>>, x: &usize, y: &usize) -> u16 {
         for offset_y in &coords {
             let nx = *x as i16 + *offset_x;
             let ny = *y as i16 + *offset_y;
-            
-            if nx < 0 || ny < 0 || ny > { map.len() - 1} as i16 || nx > { map[0].len() -1 } as i16 {
+
+            if nx < 0 || ny < 0 || ny > { map.len() - 1 } as i16 || nx > { map[0].len() - 1 } as i16
+            {
                 continue;
             }
 
             let nx = nx as usize;
             let ny = ny as usize;
-            
+
             if (nx, ny) == (*x, *y) {
                 continue;
             }
