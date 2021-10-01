@@ -55,17 +55,38 @@ fn calc_next_gen_map(map: &Vec<Vec<bool>>) -> Vec<Vec<bool>>{
     for (y, row) in map.iter().enumerate() {
         let mut newrow: Vec<bool> = Vec::new();
         for (x, cell) in row.iter().enumerate(){
-            let neighbour_count = count_cell_neighbours(map);
+            // print!("[{}.{}] ", x, y);
+            let neighbour_count = count_cell_neighbours(map, &x, &y);
             newrow.push(false);
             print!("{} ", neighbour_count);
         }
         newmap.push(newrow);
-        print!("\n");
+        // print!("\n");
     }
 
     newmap
 }
 
-fn count_cell_neighbours(map: &Vec<Vec<bool>>) -> u8 {
-    1
+fn count_cell_neighbours(map: &Vec<Vec<bool>>, x: &usize, y: &usize) -> u8 {
+    let mut count = 0;
+    let coords: Vec<i8> = vec![-1, 0, 1];
+
+    for offset_x in &coords {
+        for offset_y in &coords {
+            let nx = *x as i8 + *offset_x;
+            let ny = *y as i8 + *offset_y;
+            
+            if nx < 0 || ny < 0 || ny > { map.len() - 1} as i8 || nx > { map[0].len() -1 } as i8 {
+                continue;
+            }
+            
+            let nx = nx as usize;
+            let ny = ny as usize;
+
+            if map[ny][nx] == true {
+                count += 1;
+            }
+        }
+    }
+    count
 }
