@@ -1,8 +1,8 @@
 const LIVE: char = 'O';
 const DEAD: char = ' ';
 
-const WIDTH: u8 = 16;
-const HEIGHT: u8 = 8;
+const WIDTH: u16 = 16;
+const HEIGHT: u16 = 8;
 const LIFE_LIMIT: f64 = 0.93;
 const GENERATIONS: u16 = 2;
 
@@ -10,14 +10,20 @@ const LIFE_LIMIT_ARGS_INDEX: usize = 1;
 const GENERATIONS_ARGS_INDEX: usize = 2;
 const WIDTH_ARGS_INDEX: usize = 3;
 
+struct Cell {
+    life: CellLife,
+    x: u16,
+    y: u16,
+}
+
 enum CellLife {
     Alive,
     Dead,
 }
 
 struct Parms {
-    width: u8,
-    height: u8,
+    width: u16,
+    height: u16,
     life_minimum: f64,
     generations: u16,
 }
@@ -27,14 +33,14 @@ fn main() {
     let parms = Parms {
         width: {
             if args.len() > WIDTH_ARGS_INDEX {
-                args[WIDTH_ARGS_INDEX].parse::<u8>().unwrap()
+                args[WIDTH_ARGS_INDEX].parse::<u16>().unwrap()
             } else {
                 WIDTH
             }
         },
         height: {
             if args.len() > WIDTH_ARGS_INDEX + 1 {
-                args[WIDTH_ARGS_INDEX + 1].parse::<u8>().unwrap()
+                args[WIDTH_ARGS_INDEX + 1].parse::<u16>().unwrap()
             } else {
                 HEIGHT
             }
