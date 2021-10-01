@@ -1,5 +1,5 @@
-const LIVE: char = '/';
-const DEAD: char = '\\';
+const LIVE: char = 'O';
+const DEAD: char = ' ';
 
 const WIDTH: u8 = 16;
 const HEIGHT: u8 = 8;
