@@ -9,6 +9,7 @@ use termion::clear;
 
 const WIDTH: usize = 100;
 const HEIGHT: usize = 75;
+const GENERATIONS: i32 = 5;
 
 fn census(_world: [[u8; WIDTH]; HEIGHT]) -> u16 {
     let mut count = 0;
@@ -92,7 +93,7 @@ fn main() {
     let filename = format!("images/game_of_life.{:04}.png", generations);
     write_image(world, filename);
 
-    for _gens in 0..2 {
+    for _gens in 0..GENERATIONS {
         let temp = generation(world);
         world = temp;
         generations += 1;
