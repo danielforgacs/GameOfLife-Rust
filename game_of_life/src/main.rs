@@ -7,10 +7,13 @@ use std::io::{BufRead, BufReader};
 use termion::color;
 use termion::clear;
 
-fn census(_world: [[u8; 75]; 75]) -> u16 {
+const WIDTH: usize = 75;
+const HEIGHT: usize = 75;
+
+fn census(_world: [[u8; WIDTH]; HEIGHT]) -> u16 {
     let mut count = 0;
-    for i in 0..74 {
-        for j in 0..74 {
+    for i in 0..HEIGHT-1{
+        for j in 0..WIDTH-1 {
             if _world[i][j] == 1 {
                 count += 1;
             }
@@ -19,11 +22,11 @@ fn census(_world: [[u8; 75]; 75]) -> u16 {
     count
 }
 
-fn generation(_world: [[u8; 75]; 75]) -> [[u8; 75]; 75] {
-    let mut newworld = [[0_u8; 75]; 75];
+fn generation(_world: [[u8; WIDTH]; HEIGHT]) -> [[u8; WIDTH]; HEIGHT] {
+    let mut newworld = [[0_u8; HEIGHT]; WIDTH];
 
-    for i in 0..74 {
-        for j in 0..74 {
+    for i in 0..HEIGHT-1{
+        for j in 0..WIDTH-1{
             let mut count = 0;
 
             if i > 0 {
@@ -53,7 +56,7 @@ fn generation(_world: [[u8; 75]; 75]) -> [[u8; 75]; 75] {
             }
 
             newworld[i][j] = 0;
-            
+
             if (count < 2) && (_world[i][j] == 1) {
                 newworld[i][j] = 0;
             }
@@ -70,13 +73,13 @@ fn generation(_world: [[u8; 75]; 75]) -> [[u8; 75]; 75] {
 }
 
 fn main() {
-    let mut world = [[0_u8; 75]; 75];
+    let mut world = [[0_u8; WIDTH]; HEIGHT];
     let mut generations = 0;
 
     let args: Vec<String> = env::args().collect();
     if args.len() < 2 {
-        for i in 0..74 {
-            for j in 0..74 {
+        for i in 0..HEIGHT-1{
+            for j in 0..WIDTH-1 {
                 if rand::random() {
                     world[i][j] = 1;
                 } else {
@@ -84,7 +87,7 @@ fn main() {
                 }
             }
         }
-        
+
     } else {
 
         let filename = env::args().nth(1).unwrap();
@@ -105,7 +108,7 @@ fn main() {
         write_image(world, filename);
 
         // println!("{}", filename);
-    
+
         // println!("{}", clear::All);
         // display_world(world);
         println!("{blue}Population at generation {g} is {c}",
@@ -116,9 +119,9 @@ fn main() {
     }
 }
 
-fn display_world(world: [[u8; 75]; 75]) {
-    for i in 0..74 {
-        for j in 0..74 {
+fn display_world(world: [[u8; WIDTH]; HEIGHT]) {
+    for i in 0..HEIGHT-1{
+        for j in 0..WIDTH-1 {
             if world[i][j] == 1 {
                 print!("{red}*", red=color::Fg(color::Red));
             }
@@ -130,8 +133,8 @@ fn display_world(world: [[u8; 75]; 75]) {
     }
 }
 
-fn populate_from_file(filename: String) -> [[u8; 75]; 75] {
-    let mut newworld = [[0_u8; 75]; 75];
+fn populate_from_file(filename: String) -> [[u8; HEIGHT]; WIDTH] {
+    let mut newworld = [[0_u8; HEIGHT]; WIDTH];
     let file = File::open(filename).unwrap();
     let reader = BufReader::new(file);
     let mut pairs: Vec<(usize, usize)> = Vec::new();
@@ -142,8 +145,8 @@ fn populate_from_file(filename: String) -> [[u8; 75]; 75] {
         let rigth = words.next().unwrap();
         pairs.push((left.parse::<usize>().unwrap(), rigth.parse::<usize>().unwrap()))
     }
-    for i in 0..74 {
-        for j in 0..74 {
+    for i in 0..HEIGHT-1{
+        for j in 0..WIDTH-1 {
             newworld[i][j] = 0;
         }
     }
@@ -158,7 +161,7 @@ fn populate_from_file(filename: String) -> [[u8; 75]; 75] {
     newworld
 }
 
-fn write_image(pixels: [[u8; 75]; 75], filename: String) {
+fn write_image(pixels: [[u8; HEIGHT]; WIDTH], filename: String) {
     let w = 75_u32;
     let h = 75_u32;
     let mut imgbuf = image::ImageBuffer::new(w, h);
