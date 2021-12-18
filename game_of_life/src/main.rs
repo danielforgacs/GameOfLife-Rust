@@ -7,9 +7,9 @@ use std::io::{BufRead, BufReader};
 use termion::color;
 use termion::clear;
 
-const WIDTH: usize = 1000;
-const HEIGHT: usize = 600;
-const GENERATIONS: i32 = 5;
+const WIDTH: usize = 400;
+const HEIGHT: usize = 400;
+const GENERATIONS: i32 = 75;
 
 fn census(_world: [[u8; WIDTH]; HEIGHT]) -> usize{
     let mut count = 0_usize;
@@ -91,18 +91,18 @@ fn main() {
     }
     println!("Population at generation {} is {}", generations, census(world));
     let filename = format!("images/game_of_life.{:04}.png", generations);
-    write_image(world, filename);
+    // write_image(world, filename);
 
     for _gens in 0..GENERATIONS {
         let temp = generation(world);
         world = temp;
-        generations += 1;
         let filename = format!("images/game_of_life.{:04}.png", generations);
         write_image(world, filename);
         println!("{blue}Population at generation {g} is {c}",
-            blue=color::Fg(color::Blue),
-            g=generations,
-            c=census(world));
+        blue=color::Fg(color::Blue),
+        g=generations,
+        c=census(world));
+        generations += 1;
     }
 }
 
@@ -111,6 +111,9 @@ fn write_image(pixels: [[u8; WIDTH]; HEIGHT], filename: String) {
     let h = HEIGHT as u32;
     let mut imgbuf = image::ImageBuffer::new(w, h);
 
+
+
+    let mut first = true;
     for (x, y, pixel) in imgbuf.enumerate_pixels_mut() {
         let r = pixels[y as usize][x as usize];
         let r = r * 255;
