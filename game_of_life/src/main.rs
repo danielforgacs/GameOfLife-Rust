@@ -7,12 +7,12 @@ use std::io::{BufRead, BufReader};
 use termion::color;
 use termion::clear;
 
-const WIDTH: usize = 100;
-const HEIGHT: usize = 75;
+const WIDTH: usize = 1000;
+const HEIGHT: usize = 600;
 const GENERATIONS: i32 = 5;
 
-fn census(_world: [[u8; WIDTH]; HEIGHT]) -> u16 {
-    let mut count = 0;
+fn census(_world: [[u8; WIDTH]; HEIGHT]) -> usize{
+    let mut count = 0_usize;
     for i in 0..HEIGHT-1{
         for j in 0..WIDTH-1 {
             if _world[i][j] == 1 {
