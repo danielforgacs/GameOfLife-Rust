@@ -7,7 +7,7 @@ use std::io::{BufRead, BufReader};
 use termion::color;
 use termion::clear;
 
-const WIDTH: usize = 75;
+const WIDTH: usize = 100;
 const HEIGHT: usize = 75;
 
 fn census(_world: [[u8; WIDTH]; HEIGHT]) -> u16 {
@@ -23,7 +23,7 @@ fn census(_world: [[u8; WIDTH]; HEIGHT]) -> u16 {
 }
 
 fn generation(_world: [[u8; WIDTH]; HEIGHT]) -> [[u8; WIDTH]; HEIGHT] {
-    let mut newworld = [[0_u8; HEIGHT]; WIDTH];
+    let mut newworld = [[0_u8; WIDTH]; HEIGHT];
 
     for i in 0..HEIGHT-1{
         for j in 0..WIDTH-1{
@@ -87,14 +87,14 @@ fn main() {
                 }
             }
         }
-
-    } else {
-
-        let filename = env::args().nth(1).unwrap();
-        world = populate_from_file(filename);
-        // display_world(world);
-        println!("ensus{}, gen {}", census(world), generations);
     }
+//     } else {
+//
+//         let filename = env::args().nth(1).unwrap();
+//         world = populate_from_file(filename);
+//         // display_world(world);
+//         println!("ensus{}, gen {}", census(world), generations);
+//     }
     println!("Population at generation {} is {}", generations, census(world));
     let filename = format!("images/game_of_life.{:04}.png", generations);
     write_image(world, filename);
@@ -133,33 +133,33 @@ fn display_world(world: [[u8; WIDTH]; HEIGHT]) {
     }
 }
 
-fn populate_from_file(filename: String) -> [[u8; HEIGHT]; WIDTH] {
-    let mut newworld = [[0_u8; HEIGHT]; WIDTH];
-    let file = File::open(filename).unwrap();
-    let reader = BufReader::new(file);
-    let mut pairs: Vec<(usize, usize)> = Vec::new();
-    for (index, line) in reader.lines().enumerate() {
-        let l = line.unwrap();
-        let mut words = l.split_whitespace();
-        let left = words.next().unwrap();
-        let rigth = words.next().unwrap();
-        pairs.push((left.parse::<usize>().unwrap(), rigth.parse::<usize>().unwrap()))
-    }
-    for i in 0..HEIGHT-1{
-        for j in 0..WIDTH-1 {
-            newworld[i][j] = 0;
-        }
-    }
-
-    for (x,y) in pairs {
-        println!("live cell: {}, {}", x, y);
-        newworld[x][y] = 1;
-    }
-    // println!("census {}", census(newworld));
-    // display_world(newworld);
-
-    newworld
-}
+// fn populate_from_file(filename: String) -> [[u8; HEIGHT]; WIDTH] {
+//     let mut newworld = [[0_u8; HEIGHT]; WIDTH];
+//     let file = File::open(filename).unwrap();
+//     let reader = BufReader::new(file);
+//     let mut pairs: Vec<(usize, usize)> = Vec::new();
+//     for (index, line) in reader.lines().enumerate() {
+//         let l = line.unwrap();
+//         let mut words = l.split_whitespace();
+//         let left = words.next().unwrap();
+//         let rigth = words.next().unwrap();
+//         pairs.push((left.parse::<usize>().unwrap(), rigth.parse::<usize>().unwrap()))
+//     }
+//     for i in 0..HEIGHT-1{
+//         for j in 0..WIDTH-1 {
+//             newworld[i][j] = 0;
+//         }
+//     }
+//
+//     for (x,y) in pairs {
+//         println!("live cell: {}, {}", x, y);
+//         newworld[x][y] = 1;
+//     }
+//     // println!("census {}", census(newworld));
+//     // display_world(newworld);
+//
+//     newworld
+// }
 
 fn write_image(pixels: [[u8; HEIGHT]; WIDTH], filename: String) {
     let w = WIDTH as u32;
