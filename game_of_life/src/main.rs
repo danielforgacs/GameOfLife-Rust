@@ -162,8 +162,8 @@ fn populate_from_file(filename: String) -> [[u8; HEIGHT]; WIDTH] {
 }
 
 fn write_image(pixels: [[u8; HEIGHT]; WIDTH], filename: String) {
-    let w = 75_u32;
-    let h = 75_u32;
+    let w = WIDTH as u32;
+    let h = HEIGHT as u32;
     let mut imgbuf = image::ImageBuffer::new(w, h);
 
     for (x, y, pixel) in imgbuf.enumerate_pixels_mut() {
