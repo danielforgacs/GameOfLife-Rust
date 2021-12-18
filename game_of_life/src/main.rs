@@ -161,7 +161,7 @@ fn display_world(world: [[u8; WIDTH]; HEIGHT]) {
 //     newworld
 // }
 
-fn write_image(pixels: [[u8; HEIGHT]; WIDTH], filename: String) {
+fn write_image(pixels: [[u8; WIDTH]; HEIGHT], filename: String) {
     let w = WIDTH as u32;
     let h = HEIGHT as u32;
     let mut imgbuf = image::ImageBuffer::new(w, h);
