@@ -35,23 +35,23 @@ fn generation(_world: [[u8; WIDTH]; HEIGHT]) -> [[u8; WIDTH]; HEIGHT] {
             if i > 0 && j > 0 {
                 count = count + _world[i-1][j-1];
             }
-            if i > 0 && j < 74 {
+            if i > 0 && j < WIDTH-1 {
                 count = count + _world[i-1][j+1];
             }
-            if i < 74 && j > 0 {
+            if i < HEIGHT-1 && j > 0 {
                 count = count + _world[i+1][j-1];
             }
-            if i < 74 {
+            if i < HEIGHT-1{
                 count = count + _world[i+1][j];
             }
 
-            if i < 74 && j < 74 {
+            if i < HEIGHT-1 && j < WIDTH-1{
                 count = count + _world[i+1][j+1]
             }
             if  j > 0 {
                 count = count + _world[i][j-1]
             }
-            if  j < 74 {
+            if  j < WIDTH-1{
                 count = count + _world[i][j+1]
             }
 
@@ -86,7 +86,6 @@ fn main() {
                     world[i][j] = 0;
                 }
             }
-        }
     }
 //     } else {
 //
