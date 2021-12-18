@@ -88,78 +88,22 @@ fn main() {
             }
         }
     }
-//     } else {
-//
-//         let filename = env::args().nth(1).unwrap();
-//         world = populate_from_file(filename);
-//         // display_world(world);
-//         println!("ensus{}, gen {}", census(world), generations);
-//     }
     println!("Population at generation {} is {}", generations, census(world));
     let filename = format!("images/game_of_life.{:04}.png", generations);
     write_image(world, filename);
-    // println!("{}", filename);
-    // return;
+
     for _gens in 0..2 {
         let temp = generation(world);
         world = temp;
         generations += 1;
         let filename = format!("images/game_of_life.{:04}.png", generations);
         write_image(world, filename);
-
-        // println!("{}", filename);
-
-        // println!("{}", clear::All);
-        // display_world(world);
         println!("{blue}Population at generation {g} is {c}",
             blue=color::Fg(color::Blue),
             g=generations,
             c=census(world));
-        // thread::sleep(time::Duration::from_secs_f32(0.1));
     }
 }
-
-fn display_world(world: [[u8; WIDTH]; HEIGHT]) {
-    for i in 0..HEIGHT-1{
-        for j in 0..WIDTH-1 {
-            if world[i][j] == 1 {
-                print!("{red}*", red=color::Fg(color::Red));
-            }
-            else {
-                print!(" ");
-            }
-        }
-        println!("");
-    }
-}
-
-// fn populate_from_file(filename: String) -> [[u8; HEIGHT]; WIDTH] {
-//     let mut newworld = [[0_u8; HEIGHT]; WIDTH];
-//     let file = File::open(filename).unwrap();
-//     let reader = BufReader::new(file);
-//     let mut pairs: Vec<(usize, usize)> = Vec::new();
-//     for (index, line) in reader.lines().enumerate() {
-//         let l = line.unwrap();
-//         let mut words = l.split_whitespace();
-//         let left = words.next().unwrap();
-//         let rigth = words.next().unwrap();
-//         pairs.push((left.parse::<usize>().unwrap(), rigth.parse::<usize>().unwrap()))
-//     }
-//     for i in 0..HEIGHT-1{
-//         for j in 0..WIDTH-1 {
-//             newworld[i][j] = 0;
-//         }
-//     }
-//
-//     for (x,y) in pairs {
-//         println!("live cell: {}, {}", x, y);
-//         newworld[x][y] = 1;
-//     }
-//     // println!("census {}", census(newworld));
-//     // display_world(newworld);
-//
-//     newworld
-// }
 
 fn write_image(pixels: [[u8; WIDTH]; HEIGHT], filename: String) {
     let w = WIDTH as u32;
@@ -167,17 +111,15 @@ fn write_image(pixels: [[u8; WIDTH]; HEIGHT], filename: String) {
     let mut imgbuf = image::ImageBuffer::new(w, h);
 
     for (x, y, pixel) in imgbuf.enumerate_pixels_mut() {
-        let r = pixels[x as usize][y as usize];
+        let r = pixels[y as usize][x as usize];
         let r = r * 255;
         let g = r;
         let b = r;
         *pixel = image::Rgb([r, g, b]);
     }
 
-    // imgbuf.save(filename).unwrap();
     match imgbuf.save(filename) {
         Ok(_) => {},
-        // Err(error) => { println!("Could not save for some reason.") }
         Err(error) => { panic!("[ERROR] Could not save for some reason. Check if the \"images\" directory exists!") }
     };
 }
