@@ -86,6 +86,7 @@ fn main() {
                     world[i][j] = 0;
                 }
             }
+        }
     }
 //     } else {
 //
