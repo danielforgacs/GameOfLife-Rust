@@ -7,9 +7,9 @@ use std::io::{BufRead, BufReader};
 use termion::color;
 use termion::clear;
 
-const WIDTH: usize = 400;
-const HEIGHT: usize = 400;
-const GENERATIONS: i32 = 75;
+const WIDTH: usize = 350;
+const HEIGHT: usize = 350;
+const GENERATIONS: i32 = 100;
 
 fn census(_world: [[u8; WIDTH]; HEIGHT]) -> usize{
     let mut count = 0_usize;
